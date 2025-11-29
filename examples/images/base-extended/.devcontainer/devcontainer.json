@@ -1,0 +1,8 @@
+{
+  "name": "Extended Example",
+  // CHANGE ME: ACCOUNT_ID
+  "image": "ACCOUNT_ID.dkr.ecr.eu-central-1.amazonaws.com/devcontainers/images/base",
+  "features": {
+    "ACCOUNT_ID.dkr.ecr.eu-central-1.amazonaws.com/devcontainers/features/aws-cli": {}
+  }
+}

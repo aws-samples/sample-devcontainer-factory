@@ -1,0 +1,32 @@
+# assets/buildspec-test.yml
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 22
+    commands:
+      - yum update -y
+      - npm install -g @devcontainers/cli
+
+  pre_build:
+    commands:
+      - echo "Testing container image on $(uname -m)"
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password | docker login --username AWS --password-stdin $AWS_REGISTRY
+
+  build:
+    commands:
+      - export IMAGE=$AWS_REGISTRY_IMAGE:dev-$IMAGE_TAG-manifest
+      - echo Testing container image...
+      - docker pull $IMAGE
+      - docker inspect $IMAGE
+      - echo Creating test dev container configuration...
+      - echo $IMAGE | jq -R '{ image:"\(.)" }' > test.devcontainer.json
+      - echo Running dev container...
+      - devcontainer up --workspace-folder . --override-config test.devcontainer.json --remote-env CI=1
+      # Add more generic tests here
+
+  post_build:
+    commands:
+      - echo Testing completed on `date`

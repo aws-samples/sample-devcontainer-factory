@@ -1,0 +1,7 @@
+{
+  "name": "aws-cli",
+  "id": "aws-cli",
+  "version": "1.0.0",
+  "description": "Installs aws-cli, interact with AWS services using commands in your command-line shell.",
+  "installsAfter": ["ghcr.io/devcontainers/features/common-utils"]
+}

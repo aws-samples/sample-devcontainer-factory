@@ -1,0 +1,45 @@
+default_install_hook_types:
+  - pre-commit
+  - commit-msg
+
+default_stages:
+  - pre-commit
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-yaml
+        args: ["--unsafe"]
+      - id: end-of-file-fixer
+        exclude: \.svg$
+      - id: trailing-whitespace
+  - repo: https://github.com/semgrep/pre-commit
+    rev: v1.101.0
+    hooks:
+      - id: semgrep-ci
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.0.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+  - repo: local
+    hooks:
+      - id: synth
+        name: Synthesize CloudFormation templates (runs cdk-nag)
+        entry: cdk synth
+        language: system
+        always_run: true
+        pass_filenames: false
+      - id: lint
+        name: Run eslint
+        entry: npm run lint
+        language: system
+        always_run: true
+        pass_filenames: false
+      - id: test
+        name: Run unit tests
+        entry: npm run test
+        language: system
+        always_run: true
+        pass_filenames: false

@@ -1,0 +1,7 @@
+{
+  "name": "kiro-cli",
+  "id": "kiro-cli",
+  "version": "1.0.0",
+  "description": "Installs kiro-cli, bring the power of AI-assisted development to your terminal.",
+  "installsAfter": ["ghcr.io/devcontainers/features/common-utils"]
+}

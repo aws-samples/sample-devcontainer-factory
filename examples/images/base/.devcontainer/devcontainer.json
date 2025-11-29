@@ -1,0 +1,16 @@
+{
+  "name": "Example",
+  "image": "public.ecr.aws/debian/debian:trixie-slim",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "AmazonWebServices.aws-toolkit-vscode",
+        "AmazonWebServices.amazon-q-vscode"
+      ]
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  },
+  "remoteUser": "vscode"
+}

@@ -1,0 +1,38 @@
+{
+  "name": "devcontainer-factory",
+  "version": "0.1.0",
+  "bin": {
+    "devcontainer-app": "bin/devcontainer-factory.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -r ./dist",
+    "watch": "tsc -w",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage --coverageReporters='text-summary'",
+    "test:coverage:detailed": "jest --coverage && open coverage/lcov-report/index.html",
+    "test": "jest",
+    "cdk": "cdk",
+    "lint": "eslint bin lib",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.1",
+    "@types/jest": "30.0.0",
+    "@types/node": "24.10.1",
+    "aws-cdk": "2.1033.0",
+    "eslint": "9.39.1",
+    "globals": "16.5.0",
+    "jest": "30.2.0",
+    "ts-jest": "29.4.5",
+    "ts-node": "10.9.2",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.48.0"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.230.0",
+    "cdk-nag": "2.37.55",
+    "constructs": "10.4.3",
+    "source-map-support": "0.5.21"
+  }
+}

@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - yum update -y
+
+  pre_build:
+    commands:
+      - export IMAGE=$AWS_REGISTRY_IMAGE:dev-$IMAGE_TAG
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password | docker login --username AWS --password-stdin $AWS_REGISTRY
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Creating the manifest...
+      - docker manifest create $IMAGE-manifest $IMAGE-arm64 $IMAGE-amd64
+      - echo Manifest created on `date`
+
+  post_build:
+    commands:
+      - echo Pushing the image...
+      - docker manifest push $IMAGE-manifest
+      - echo Inspecting multi-arch image
+      - docker manifest inspect $IMAGE-manifest

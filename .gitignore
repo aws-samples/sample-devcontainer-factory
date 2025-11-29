@@ -1,0 +1,11 @@
+.DS_Store
+node_modules
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+dist
+
+# Ignore drawio backup files
+.$*.svg.bkp
+coverage/

@@ -1,0 +1,37 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 22
+    commands:
+      - yum update -y
+      - yum install -y jq
+      - dnf install -y amazon-ecr-credential-helper
+      - npm install -g @devcontainers/cli
+
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password | docker login --username AWS --password-stdin $AWS_REGISTRY
+      - echo Enabling Amazon ECR Credential Helper ...
+      - mkdir -p $HOME/.docker
+      - 'echo "{ \"credsStore\": \"ecr-login\" }" > $HOME/.docker/config.json'
+
+  build:
+    commands:
+      - echo Adding metadata...
+      - |
+        if DOCKERFILE=$(jq -er '.build.dockerfile' .devcontainer/devcontainer.json 2>/dev/null); then
+        cat > .devcontainer/meta.env << EOF
+        DEVCONTAINER_BUILD_TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+        EOF
+
+        echo COPY meta.env /opt/devcontainer.d/meta.env >> ".devcontainer/$DOCKERFILE"
+        fi
+      - echo Constructing the development container...
+      - |
+        devcontainer build --workspace-folder . \
+          --image-name "${AWS_REGISTRY_IMAGE}:dev-${IMAGE_TAG}${IMAGE_TAG_SUFFIX}" \
+          --push
+      - echo Build and push completed on `date`

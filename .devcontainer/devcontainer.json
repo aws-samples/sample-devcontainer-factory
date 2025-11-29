@@ -1,0 +1,33 @@
+{
+  "name": "Factory",
+  "image": "public.ecr.aws/debian/debian:trixie-slim@sha256:2bc59bd47e43c992d4f5a01aaf2bde3b45a363c06cef130bff2b737e99cd55c9",
+  "postCreateCommand": {
+    "cdk": "npm install -g aws-cdk npm-check-updates",
+    "package.json": "npm i",
+    "pre-commit": "pipx install pre-commit && pre-commit install"
+  },
+  "postAttachCommand": {
+    "dependencies": "ncu -u"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2
+      },
+      "extensions": [
+        "AmazonWebServices.aws-toolkit-vscode",
+        "AmazonWebServices.amazon-q-vscode",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {},
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/python:1": {}
+  },
+  "remoteUser": "vscode"
+}

@@ -1,0 +1,39 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password | docker login --username AWS --password-stdin $AWS_REGISTRY
+
+  build:
+    commands:
+      - export VERSION=$(date +%Y%m%d-%H%M%S)
+      - export SOURCE_MANIFEST="dev-$IMAGE_TAG-manifest"
+      - |
+        # Release with timestamp
+        aws ecr put-image \
+          --repository-name $IMAGE_REPO_NAME \
+          --image-tag $VERSION \
+          --image-manifest \
+        "$(aws ecr batch-get-image \
+          --repository-name $IMAGE_REPO_NAME \
+          --image-ids imageTag=$SOURCE_MANIFEST \
+          --query 'images[].imageManifest' \
+          --output text)"
+      - |
+        # Release as latest
+        aws ecr put-image \
+          --repository-name $IMAGE_REPO_NAME \
+          --image-tag latest \
+          --image-manifest \
+        "$(aws ecr batch-get-image \
+          --repository-name $IMAGE_REPO_NAME \
+          --image-ids imageTag=$SOURCE_MANIFEST \
+          --query 'images[].imageManifest' \
+          --output text)"
+
+  post_build:
+    commands:
+      - echo Release completed on `date`
+      - echo Released version $VERSION and latest
