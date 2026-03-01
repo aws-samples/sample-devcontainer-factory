@@ -30,7 +30,7 @@
     "typescript-eslint": "8.48.0"
   },
   "dependencies": {
-    "aws-cdk-lib": "2.230.0",
+    "aws-cdk-lib": "2.240.0",
     "cdk-nag": "2.37.55",
     "constructs": "10.4.3",
     "source-map-support": "0.5.21"
