@@ -46,10 +46,10 @@ Deploy the factory and pipeline stacks:
 
 ```bash
 # Deploy warehouse and image pipeline
-cdk deploy --context namespace=devcontainers --context images=python,node --all
+npx cdk deploy --context namespace=devcontainers --context images=python,node --all
 
 # Deploy warehouse and feature pipeline
-cdk deploy --context namespace=devcontainers --context features=amazon-q-cli --all
+npx cdk deploy --context namespace=devcontainers --context features=amazon-q-cli --all
 ```
 
 ## Operation
